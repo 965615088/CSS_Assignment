@@ -16,6 +16,9 @@ export default function Navbar() {
       <Link className={styles.navitem} href="/scoreboard">
         Scoreboard
       </Link>
+      <Link className={styles.navitem} href="/historyofgames">
+        History of Games
+      </Link>
     </nav>
   );
 }
