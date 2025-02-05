@@ -4,95 +4,94 @@ import "./page.css";
 
 export default function App() {
   const [score, setScore] = useState(0);
-  const [moles, setMoles] = useState(new Array(9).fill(false));
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [lives, setLives] = useState(3);
+  const [holes, setHoles] = useState(new Array(9).fill(null));
+  const [timeLeft, setTimeLeft] = useState(45); // Increased time for larger game
   const [isGameActive, setIsGameActive] = useState(false);
-  const [scoreboard, setScoreboard] = useState([]);
-  const [showScoreboard, setShowScoreboard] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
   const startGame = () => {
     setScore(0);
-    setTimeLeft(30);
-    setMoles(new Array(9).fill(false)); // Reset moles to default state
+    setLives(3);
+    setTimeLeft(45); // Reset time to 45 seconds
+    setHoles(new Array(9).fill(null));
     setIsGameActive(true);
     setGameOver(false);
   };
 
-  const popMole = (index) => {
-    setMoles((curMoles) => {
-      const newMoles = [...curMoles];
-      newMoles[index] = true;
-      return newMoles;
+  const popItem = () => {
+    const randomIndex = Math.floor(Math.random() * holes.length);
+    const isBomb = Math.random() < 0.1; // Lowered bomb probability to 10%
+    setHoles((curHoles) => {
+      const newHoles = [...curHoles];
+      newHoles[randomIndex] = isBomb ? "bomb" : "mole";
+      return newHoles;
     });
+    setTimeout(() => {
+      setHoles((curHoles) => {
+        const newHoles = [...curHoles];
+        newHoles[randomIndex] = null;
+        return newHoles;
+      });
+    }, 900);
   };
 
-  const hideMole = (index) => {
-    setMoles((curMoles) => {
-      const newMoles = [...curMoles];
-      newMoles[index] = false;
-      return newMoles;
-    });
-  };
-
-  const wackMole = (index) => {
-    if (!moles[index]) return; // Prevent score from increasing if no mole is present
-    hideMole(index);
-    setScore((prevScore) => prevScore + 1);
+  const handleClick = (index) => {
+    const holeContent = holes[index];
+    if (holeContent === "mole") {
+      setScore((prevScore) => prevScore + 1);
+      setHoles((curHoles) => {
+        const newHoles = [...curHoles];
+        newHoles[index] = null;
+        return newHoles;
+      });
+    } else if (holeContent === "bomb") {
+      setLives((prevLives) => prevLives - 1);
+      if (lives - 1 <= 0) {
+        setIsGameActive(false);
+        setGameOver(true);
+      }
+    }
   };
 
   useEffect(() => {
     let gameInterval;
     let timerInterval;
-
     if (isGameActive) {
       gameInterval = setInterval(() => {
-        const randomIndex = Math.floor(Math.random() * moles.length);
-        popMole(randomIndex);
-        setTimeout(() => {
-          hideMole(randomIndex);
-        }, 900); // Mole stays up for 900ms
-      }, 1000); // New mole every 1 second
-
+        popItem();
+      }, 1000);
       timerInterval = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
     }
-
     if (timeLeft === 0) {
       setIsGameActive(false);
       setGameOver(true);
-      setScoreboard((prevScoreboard) => [...prevScoreboard, score]);
     }
-
     return () => {
       clearInterval(gameInterval);
       clearInterval(timerInterval);
     };
-  }, [isGameActive, timeLeft, moles]);
-
-  if (showScoreboard) {
-    return (
-      <div className="center">
-        <h1>Scoreboard</h1>
-        <ul>
-          {scoreboard.map((score, index) => (
-            <li key={index}>
-              Game {index + 1}: {score}
-            </li>
-          ))}
-        </ul>
-        <button onClick={() => setShowScoreboard(false)}>Back to Game</button>
-      </div>
-    );
-  }
+  }, [isGameActive, timeLeft]);
 
   return (
     <div className="game-container">
+      {/* TOP-LEFT UI (Lives & Timer) */}
+      <div className="top-left-container">
+        <div className="lives-container">
+          <img src="/heart.png" alt="Heart" className="heart-icon" />
+          <span>{lives}</span>
+        </div>
+        <div className="timer-container">
+          <img src="/hourglass.png" alt="Hourglass" className="hourglass-icon" />
+          <span>{timeLeft}s</span>
+        </div>
+      </div>
+
       <div className="game-content">
         <h1>Whack-a-Mole</h1>
         <h2>Score: {score}</h2>
-        <h2>Time Left: {timeLeft}s</h2>
         {!isGameActive && !gameOver && (
           <button className="start-button" onClick={startGame}>
             Start Game
@@ -103,21 +102,23 @@ export default function App() {
             <div className="game-over">
               <h2>Game Over!</h2>
               <p>Your Score: {score}</p>
-              <button onClick={() => setShowScoreboard(true)}>
-                View Scoreboard
-              </button>
               <button onClick={startGame}>Play Again</button>
             </div>
           </div>
         )}
         <div className="grid">
-          {moles.map((isMole, index) => (
-            <div key={index} className="hole">
+          {holes.map((content, index) => (
+            <div key={index} className="hole" onClick={() => handleClick(index)}>
               <img
-                src={isMole ? "/mole.png" : "/hole.png"}
-                alt={isMole ? "Mole" : "Hole"}
-                onClick={() => wackMole(index)}
-                className={`mole-hole ${isMole ? "active" : ""}`}
+                src={
+                  content === "mole"
+                    ? "/mole.png"
+                    : content === "bomb"
+                    ? "/bomb.png"
+                    : "/hole.png"
+                }
+                alt={content || "Hole"}
+                className={`mole-hole ${content ? "active" : ""}`}
               />
             </div>
           ))}
