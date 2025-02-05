@@ -1,23 +1,19 @@
 "use client";
+import styles from "./page.module.css";
 
 export default function Home() {
-    const navigateToGame = () => {
-      window.location.href = "/game";
-    };
-  
-    return (
-      <div className="flex h-screen items-center justify-center bg-blue-200">
-        <div className="text-center bg-white p-8 rounded-2xl shadow-lg">
-          <h1 className="text-4xl font-bold text-blue-600 mb-4">Whack-a-Mole</h1>
-          <p className="text-lg text-gray-700 mb-6">Are you ready to test your reflexes?</p>
-          <button
-            onClick={navigateToGame}
-            className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition"
-          >
-            Start
-          </button>
+  return (
+    <div className={styles.container}>
+      <div className={styles.menuBox}>
+        <h1 className={styles.title}>Whack-a-Mole</h1>
+        <p className={styles.subtitle}>Are you ready to test your reflexes?</p>
+        <div className={styles.buttonContainer}>
+          <a href="/game" className={styles.button}>Play</a>
+          <a href="/history" className={styles.button}>History</a>
+          <a href="/guide" className={styles.button}>Guide</a>
+          <a href="/settings" className={styles.button}>Settings</a>
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

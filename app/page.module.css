@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: url('/background.png') no-repeat center center/cover;
+  }
+  
+  .menuBox {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #ff9900;
+    text-shadow: 3px 3px 0px #ff6600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(to bottom, #c4e700, #7ab800);
+    border: 3px solid #ff6600;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    text-shadow: 2px 2px 0px #444;
+  }
+  
+  .button:hover {
+    background: linear-gradient(to bottom, #a1cc00, #6a9f00);
+    transform: scale(1.05);
+  }
+  

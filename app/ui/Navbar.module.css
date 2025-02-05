@@ -1,8 +1,10 @@
 .navbar {
     background-color: #333;
     overflow: hidden;
+    
   }
   
+
   .navitem {
     float: left;
     display: block;
