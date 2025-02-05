@@ -1,0 +1,136 @@
+/* Container and General Styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #1a202c; /* Dark background */
+    color: #f7fafc; /* Light text */
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Card Styles */
+  .card {
+    background-color: #2d3748; /* Slightly lighter dark color */
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Title */
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffd700; /* Golden color for the title */
+  }
+  
+  /* Scoreboard List */
+  .scoreboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .scoreboard-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #4a5568; /* Darker gray for list items */
+    border: 1px solid #2d3748;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  /* Hover Effect for Scoreboard Items */
+  .scoreboard-item:hover {
+    transform: scale(1.02);
+    background-color: #718096;
+  }
+  
+  /* Rank Colors */
+  .gold {
+    color: #ffd700; /* Gold for Rank 1 */
+  }
+  
+  .silver {
+    color: #c0c0c0; /* Silver for Rank 2 */
+  }
+  
+  .bronze {
+    color: #cd7f32; /* Bronze for Rank 3 */
+  }
+  
+  .default {
+    color: #f7fafc; /* Default color for other ranks */
+  }
+  
+  /* No Scores Message */
+  .no-scores {
+    color: #a0aec0; /* Light gray */
+    font-size: 1.1rem;
+  }
+  
+  /* Button Container */
+  .button-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  /* Buttons */
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .back-button {
+    background-color: #3182ce; /* Blue button */
+    color: #f7fafc;
+  }
+  
+  .back-button:hover {
+    background-color: #2b6cb0; /* Darker blue */
+    transform: scale(1.05);
+  }
+  
+  .clear-button {
+    background-color: #e53e3e; /* Red button */
+    color: #f7fafc;
+  }
+  
+  .clear-button:hover {
+    background-color: #c53030; /* Darker red */
+    transform: scale(1.05);
+  }
+  
+  /* Mobile Responsiveness */
+  @media screen and (max-width: 768px) {
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .scoreboard-item {
+      font-size: 1rem;
+      padding: 10px 15px;
+    }
+  
+    .button {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+  }
+  
