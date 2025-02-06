@@ -10,6 +10,42 @@ export default function App() {
   const [isGameActive, setIsGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
+  // Default settings
+  const DEFAULT_STORAGE_KEY = "whacAMoleSettings";
+  const [difficulty, setDifficulty] = useState("medium"); // Default difficulty
+
+  // Load saved settings only on the client side
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedSettings = localStorage.getItem(DEFAULT_STORAGE_KEY);
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        setDifficulty(parsedSettings.difficulty || "medium");
+      }
+    }
+  }, []);
+
+  //initialise default difficulty
+  let bombProbability = 0.2; 
+  let moleDuration = 750; 
+
+  // difficulty is swapped depending on the difficulty set in the settings page
+  switch (difficulty) {
+    case "easy":
+      bombProbability = 0.1;
+      moleDuration = 900;
+      break;
+    case "hard":
+      bombProbability = 0.35;
+      moleDuration = 500;
+      break;
+    case "medium":
+    default:
+      bombProbability = 0.2;
+      moleDuration = 750;
+      break;
+  }
+
   const startGame = () => {
     setScore(0);
     setLives(3);
@@ -21,7 +57,7 @@ export default function App() {
 
   const popItem = () => {
     const randomIndex = Math.floor(Math.random() * holes.length);
-    const isBomb = Math.random() < 0.1; // Lowered bomb probability to 10%
+    const isBomb = Math.random() < bombProbability; // Dynamically adjust bomb probability
     setHoles((curHoles) => {
       const newHoles = [...curHoles];
       newHoles[randomIndex] = isBomb ? "bomb" : "mole";
@@ -33,7 +69,7 @@ export default function App() {
         newHoles[randomIndex] = null;
         return newHoles;
       });
-    }, 900);
+    }, moleDuration); // Dynamically adjust mole duration
   };
 
   const handleClick = (index) => {
@@ -88,7 +124,6 @@ export default function App() {
           <span>{timeLeft}s</span>
         </div>
       </div>
-
       <div className="game-content">
         <h1>Whack-a-Mole</h1>
         <h2>Score: {score}</h2>
