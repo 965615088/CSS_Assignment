@@ -25,7 +25,7 @@ export default function App() {
         const parsedSettings = JSON.parse(savedSettings);
         setDifficulty(parsedSettings.difficulty || "medium");
         setMoleSkin(parsedSettings.moleSkin || "mole.png");
-        setVolume(Number(parsedSettings.volume) || 50);
+        setVolume(Number(parsedSettings.volume) ?? 50);
       }
     }
   }, []);
