@@ -1,17 +1,31 @@
-/* Ensure the container takes up the full width */
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive, sans-serif; /* Retro font */
+  background-color: black; /* Dark background */
+  color: #00ff00; /* Neon text color */
+  line-height: 1.6;
+}
+
+/* Game Container */
 .game-container {
   position: relative;
   width: 600px; /* Increased width */
   height: 800px; /* Adjusted height if needed */
   margin: 0 auto;
-  background-color: white;
-  border: 2px solid black;
+  background-color: rgba(0, 0, 0, 0.8); /* Dark, semi-transparent background */
+  border: 2px solid #00ff00; /* Neon green border */
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3); /* Neon green shadow for depth */
 }
 
-/*TOP-LEFT: Lives & Timer */
+/* TOP-LEFT: Lives & Timer */
 .top-left-container {
   position: absolute;
   top: 50px; /* Lowered from top */
@@ -19,6 +33,7 @@
   display: flex;
   align-items: center;
   gap: 15px; /* Space between lives and timer */
+  color: #00ff00; /* Neon green text */
 }
 
 /* Individual lives and timer containers */
@@ -34,6 +49,7 @@
 .hourglass-icon {
   width: 30px; /* Enlarged icons */
   height: 30px;
+  filter: drop-shadow(2px 2px 5px rgba(0, 255, 0, 0.5)); /* Glow effect */
 }
 
 /* Return button */
@@ -41,10 +57,14 @@
   position: absolute;
   top: 0px;
   left: 10px; /* Same left position as top-left-container */
-  width: 40px; 
-  height: 40px; 
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   z-index: 1; /* Ensure it appears above other elements */
+  background-color: #00ff00; /* Neon green background */
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 255, 0, 0.3); /* Glow effect */
 }
 
 /* Score and game UI */
@@ -57,15 +77,17 @@
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #00ff00; /* Neon green button */
   color: white;
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 255, 0, 0.3); /* Glow effect */
 }
 
 .start-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 255, 0.5); /* Blue glow on hover */
 }
 
 /* Grid for game holes */
@@ -83,6 +105,7 @@
   height: 180px;
   overflow: hidden;
   cursor: pointer;
+  /* Borders removed from the hole */
 }
 
 .mole-hole {
@@ -102,6 +125,7 @@
 .mole-hole img {
   width: 100%; /* Make the image fill the entire hole */
   height: auto; /* Maintain aspect ratio */
+  filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5)); /* Glow effect */
 }
 
 /* Game Over Overlay */
@@ -128,6 +152,7 @@
 
 .game-over h2 {
   margin-bottom: 10px;
+  color: #00ff00; /* Neon green title */
 }
 
 .game-over button {
@@ -141,7 +166,7 @@
 }
 
 .game-over .play-again {
-  background-color: #28a745;
+  background-color: #28a745; /* Green button */
   color: white;
 }
 
@@ -150,7 +175,7 @@
 }
 
 .game-over .scoreboard {
-  background-color: #007bff;
+  background-color: #007bff; /* Blue button */
   color: white;
 }
 
@@ -159,7 +184,7 @@
 }
 
 .game-over .home {
-  background-color: #ff5722;
+  background-color: #ff5722; /* Orange button */
   color: white;
 }
 
@@ -172,16 +197,17 @@
   position: absolute;
   top: 10px;
   right: 10px; /* Positioned at the top-right */
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
   padding: 10px;
-  border: 2px solid black;
+  border: 2px solid #00ff00; /* Neon green border */
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3); /* Neon green glow */
 }
 
 .difficulty-box span {
   font-weight: bold;
   font-size: 16px;
+  color: #00ff00; /* Neon green text */
 }
 
 .difficulty-box .difficulty-level {
