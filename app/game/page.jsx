@@ -96,6 +96,8 @@ export default function App() {
     } else if (holeContent === "bomb") {
       if (volume > 0) {
         playExplosion();
+      } else {
+        stop();
       }
       setLives((prevLives) => prevLives - 1);
       if (lives - 1 <= 0) {
