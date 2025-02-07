@@ -14,7 +14,7 @@
 /*TOP-LEFT: Lives & Timer */
 .top-left-container {
   position: absolute;
-  top: 10px;
+  top: 50px; /* Lowered from top */
   left: 10px; /* Moved to top-left */
   display: flex;
   align-items: center;
@@ -34,6 +34,17 @@
 .hourglass-icon {
   width: 30px; /* Enlarged icons */
   height: 30px;
+}
+
+/* Return button */
+.return-button {
+  position: absolute;
+  top: 0px;
+  left: 10px; /* Same left position as top-left-container */
+  width: 40px; 
+  height: 40px; 
+  cursor: pointer;
+  z-index: 1; /* Ensure it appears above other elements */
 }
 
 /* Score and game UI */
@@ -123,13 +134,68 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #28a745;
-  color: white;
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  margin: 5px;
 }
 
-.game-over button:hover {
+.game-over .play-again {
+  background-color: #28a745;
+  color: white;
+}
+
+.game-over .play-again:hover {
   background-color: #218838;
+}
+
+.game-over .scoreboard {
+  background-color: #007bff;
+  color: white;
+}
+
+.game-over .scoreboard:hover {
+  background-color: #0056b3;
+}
+
+.game-over .home {
+  background-color: #ff5722;
+  color: white;
+}
+
+.game-over .home:hover {
+  background-color: #e64a19;
+}
+
+/* Difficulty Box */
+.difficulty-box {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Positioned at the top-right */
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.difficulty-box span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.difficulty-box .difficulty-level {
+  color: inherit;
+}
+
+.difficulty-box .easy {
+  color: green;
+}
+
+.difficulty-box .medium {
+  color: rgba(209, 209, 15, 0.774);
+}
+
+.difficulty-box .hard {
+  color: red;
 }

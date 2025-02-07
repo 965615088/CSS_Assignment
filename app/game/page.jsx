@@ -16,7 +16,6 @@ export default function App() {
   const [difficulty, setDifficulty] = useState("medium");
   const [moleSkin, setMoleSkin] = useState("mole.png");
   const [volume, setVolume] = useState(50);
-  // const [explosion] = useSound('Explosion.mp3', {volume: volume / 100,});
   const [explosion, { stop, setVolume: setExplosionVolume }] = useSound('explosion.mp3', {
     volume: volume / 100,
   });
@@ -39,27 +38,37 @@ export default function App() {
       setExplosionVolume(volume / 100);
     }
   }, [volume, setExplosionVolume]);
-  
-  //initialise default difficulty
+
+  // Initialize default difficulty
   let bombProbability = 0.2; 
   let moleDuration = 750; 
+  let gameLoopInterval = 1000; // Default interval
 
-  // difficulty is swapped depending on the difficulty set in the settings page
-  switch (difficulty) {
-    case "easy":
-      bombProbability = 1;
-      moleDuration = 900;
-      break;
+  // Adjust difficulty settings
+  useEffect(() => {
+    switch (difficulty) {
+      case "easy":
+        bombProbability = 0.1; // Lower bomb probability for easy mode
+        moleDuration = 1200; // Mole stays up for 1.2 seconds
+        gameLoopInterval = 1500; // Slower game loop for easy mode
+        break;
       case "medium":
-        default:
-          bombProbability = 0.2;
-          moleDuration = 750;
-          break;
-    case "hard":
-      bombProbability = 0.35;
-      moleDuration = 500;
-      break;
+        bombProbability = 0.2;
+        moleDuration = 1000; // Mole stays up for 1 second
+        gameLoopInterval = 1000; // Medium game loop interval
+        break;
+      case "hard":
+        bombProbability = 0.4; // Increase bomb probability for hard mode
+        moleDuration = 700; // Mole stays up for 0.7 seconds
+        gameLoopInterval = 500; // Faster game loop for hard mode
+        break;
+      default:
+        bombProbability = 0.2;
+        moleDuration = 750;
+        gameLoopInterval = 1000;
+        break;
     }
+  }, [difficulty]);
 
   const startGame = () => {
     setScore(0);
@@ -84,7 +93,7 @@ export default function App() {
         newHoles[randomIndex] = null;
         return newHoles;
       });
-    }, moleDuration); // Dynamically adjust mole duration
+    }, moleDuration); // Use the appropriate mole duration based on difficulty
   };
 
   const handleClick = (index) => {
@@ -106,13 +115,25 @@ export default function App() {
     }
   };
 
+  const handleReturn = () => {
+    window.location.href = "/";
+  };
+
+  const handleScoreboard = () => {
+    window.location.href = "/history";
+  };
+
+  const handleHome = () => {
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     let gameInterval;
     let timerInterval;
     if (isGameActive) {
       gameInterval = setInterval(() => {
         popItem();
-      }, 1000);
+      }, gameLoopInterval); // Use the appropriate interval based on difficulty
       timerInterval = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
@@ -125,10 +146,12 @@ export default function App() {
       clearInterval(gameInterval);
       clearInterval(timerInterval);
     };
-  }, [isGameActive, timeLeft]);
+  }, [isGameActive, timeLeft, moleDuration, gameLoopInterval]);
 
   return (
     <div className="game-container">
+      {/* Return Button */}
+      <img src="/return.png" alt="Return" className="return-button" onClick={handleReturn} />
       {/* TOP-LEFT UI (Lives & Timer) */}
       <div className="top-left-container">
         <div className="lives-container">
@@ -153,10 +176,17 @@ export default function App() {
             <div className="game-over">
               <h2>Game Over!</h2>
               <p>Your Score: {score}</p>
-              <button onClick={startGame}>Play Again</button>
+              <button className="play-again" onClick={startGame}>Play Again</button>
+              <button className="scoreboard" onClick={handleScoreboard}>Scoreboard</button>
+              <button className="home" onClick={handleHome}>Home</button>
             </div>
           </div>
         )}
+        <div className="difficulty-box">
+          <span>
+            Current Difficulty: <span className={`difficulty-level ${difficulty}`}>{difficulty}</span>
+          </span>
+        </div>
         <div className="grid">
           {holes.map((content, index) => (
             <div key={index} className="hole" onClick={() => handleClick(index)}>
