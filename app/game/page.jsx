@@ -7,20 +7,17 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [holes, setHoles] = useState(new Array(9).fill(null));
-  const [timeLeft, setTimeLeft] = useState(45); // Increased time for larger game
+  const [timeLeft, setTimeLeft] = useState(45);
   const [isGameActive, setIsGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
-  // Default settings
+  // Storage key for settings
   const DEFAULT_STORAGE_KEY = "whacAMoleSettings";
   const [difficulty, setDifficulty] = useState("medium");
   const [moleSkin, setMoleSkin] = useState("mole.png");
   const [volume, setVolume] = useState(50);
-  const [explosion, { stop, setVolume: setExplosionVolume }] = useSound('explosion.mp3', {
-    volume: volume / 100,
-  });
 
-  // Load saved settings only on the client side
+  // Load settings from local storage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedSettings = localStorage.getItem(DEFAULT_STORAGE_KEY);
@@ -33,47 +30,38 @@ export default function App() {
     }
   }, []);
 
+  // Sound effect setup
+  const [explosion, { stop, setVolume: setExplosionVolume }] = useSound('explosion.mp3', {
+    volume: volume / 100,
+  });
+
   useEffect(() => {
     if (setExplosionVolume) {
       setExplosionVolume(volume / 100);
     }
   }, [volume, setExplosionVolume]);
 
-  // Initialize default difficulty
-  let bombProbability = 0.2; 
-  let moleDuration = 750; 
-  let gameLoopInterval = 1000; // Default interval
-
-  // Adjust difficulty settings
-  useEffect(() => {
+  // Game settings based on difficulty
+  const getGameSettings = (difficulty) => {
     switch (difficulty) {
       case "easy":
-        bombProbability = 0.1; // Lower bomb probability for easy mode
-        moleDuration = 1200; // Mole stays up for 1.2 seconds
-        gameLoopInterval = 1500; // Slower game loop for easy mode
-        break;
+        return { bombProbability: 0.1, moleDuration: 1200, gameLoopInterval: 1500 };
       case "medium":
-        bombProbability = 0.2;
-        moleDuration = 1000; // Mole stays up for 1 second
-        gameLoopInterval = 1000; // Medium game loop interval
-        break;
+        return { bombProbability: 0.2, moleDuration: 1000, gameLoopInterval: 1000 };
       case "hard":
-        bombProbability = 0.4; // Increase bomb probability for hard mode
-        moleDuration = 700; // Mole stays up for 0.7 seconds
-        gameLoopInterval = 500; // Faster game loop for hard mode
-        break;
+        return { bombProbability: 0.4, moleDuration: 700, gameLoopInterval: 500 };
       default:
-        bombProbability = 0.2;
-        moleDuration = 750;
-        gameLoopInterval = 1000;
-        break;
+        return { bombProbability: 0.2, moleDuration: 750, gameLoopInterval: 1000 };
     }
-  }, [difficulty]);
+  };
+
+  // Apply difficulty settings
+  const { bombProbability, moleDuration, gameLoopInterval } = getGameSettings(difficulty);
 
   const startGame = () => {
     setScore(0);
     setLives(3);
-    setTimeLeft(45); // Reset time to 45 seconds
+    setTimeLeft(45);
     setHoles(new Array(9).fill(null));
     setIsGameActive(true);
     setGameOver(false);
@@ -81,7 +69,7 @@ export default function App() {
 
   const popItem = () => {
     const randomIndex = Math.floor(Math.random() * holes.length);
-    const isBomb = Math.random() < bombProbability; // Dynamically adjust bomb probability
+    const isBomb = Math.random() < bombProbability;
     setHoles((curHoles) => {
       const newHoles = [...curHoles];
       newHoles[randomIndex] = isBomb ? "bomb" : "mole";
@@ -93,7 +81,7 @@ export default function App() {
         newHoles[randomIndex] = null;
         return newHoles;
       });
-    }, moleDuration); // Use the appropriate mole duration based on difficulty
+    }, moleDuration);
   };
 
   const handleClick = (index) => {
@@ -115,28 +103,12 @@ export default function App() {
     }
   };
 
-  const handleReturn = () => {
-    window.location.href = "/";
-  };
-
-  const handleScoreboard = () => {
-    window.location.href = "/history";
-  };
-
-  const handleHome = () => {
-    window.location.href = "/";
-  };
-
   useEffect(() => {
     let gameInterval;
     let timerInterval;
     if (isGameActive) {
-      gameInterval = setInterval(() => {
-        popItem();
-      }, gameLoopInterval); // Use the appropriate interval based on difficulty
-      timerInterval = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
+      gameInterval = setInterval(popItem, gameLoopInterval);
+      timerInterval = setInterval(() => setTimeLeft((prevTime) => prevTime - 1), 1000);
     }
     if (timeLeft === 0) {
       setIsGameActive(false);
@@ -146,13 +118,11 @@ export default function App() {
       clearInterval(gameInterval);
       clearInterval(timerInterval);
     };
-  }, [isGameActive, timeLeft, moleDuration, gameLoopInterval]);
+  }, [isGameActive, timeLeft, gameLoopInterval]);
 
   return (
     <div className="game-container">
-      {/* Return Button */}
-      <img src="/return.png" alt="Return" className="return-button" onClick={handleReturn} />
-      {/* TOP-LEFT UI (Lives & Timer) */}
+      <img src="/return.png" alt="Return" className="return-button" onClick={() => window.location.href = "/"} />
       <div className="top-left-container">
         <div className="lives-container">
           <img src="/heart.png" alt="Heart" className="heart-icon" />
@@ -177,8 +147,8 @@ export default function App() {
               <h2>Game Over!</h2>
               <p>Your Score: {score}</p>
               <button className="play-again" onClick={startGame}>Play Again</button>
-              <button className="scoreboard" onClick={handleScoreboard}>Scoreboard</button>
-              <button className="home" onClick={handleHome}>Home</button>
+              <button className="scoreboard" onClick={() => window.location.href = "/history"}>Scoreboard</button>
+              <button className="home" onClick={() => window.location.href = "/"}>Home</button>
             </div>
           </div>
         )}

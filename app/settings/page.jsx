@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import "../ui/Navbar.module.css";
 import "../settings/styles.css";
 
 export default function Settings() {
