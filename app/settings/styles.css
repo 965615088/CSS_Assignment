@@ -1,0 +1,132 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light grayish background */
+    color: #333; /* Dark text color */
+    line-height: 1.6;
+  }
+  
+  /* Settings Container */
+  .settings-container {
+    max-width: 500px; /* Limit width for better readability */
+    margin: 50px auto; /* Center the container */
+    padding: 20px;
+    background: #ffffff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Heading */
+  .settings-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4a90e2; /* Blue heading color */
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Individual Setting Option */
+  .settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Separator between options */
+  }
+  
+  .settings-option label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555; /* Slightly darker text */
+  }
+  
+  /* Dropdown Select */
+  .settings-option select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .settings-option select:focus {
+    outline: none;
+    border-color: #4a90e2; /* Highlight on focus */
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+  }
+  
+  /* Volume Slider */
+  .settings-option input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+  }
+  
+  .settings-option input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4a90e2;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .settings-option input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4a90e2;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  /* Checkbox */
+  .settings-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #4a90e2; /* Custom checkbox color */
+    cursor: pointer;
+  }
+  
+  /* Save Button */
+  .save-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #4a90e2; /* Blue button */
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #357abd; /* Darker blue on hover */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .settings-container {
+      margin: 20px;
+      padding: 15px;
+    }
+  
+    .settings-container h1 {
+      font-size: 1.5rem;
+    }
+  }
