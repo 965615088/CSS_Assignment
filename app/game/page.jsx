@@ -36,13 +36,27 @@ export default function App() {
 
   const playExplosion = useCallback(() => {
     if (volume > 0) {
-      play();  
+      play();
+    } else {
+      stop();
     }
-  }, [volume, play]); 
+  }, [volume, play]);
 
-  const [playHit] = useSound('hit.mp3', {
-    volume: volume / 100,
-  });
+  // Save score with difficulty
+  const saveScore = (score, difficulty) => {
+    const savedScores = JSON.parse(localStorage.getItem('gameScores')) || {};
+    if (!savedScores[difficulty]) {
+      savedScores[difficulty] = [];
+    }
+    savedScores[difficulty].push(score);
+    localStorage.setItem('gameScores', JSON.stringify(savedScores));
+  };
+
+  // Retrieve scores by difficulty
+  const getScoresByDifficulty = (difficulty) => {
+    const savedScores = JSON.parse(localStorage.getItem('gameScores')) || {};
+    return savedScores[difficulty] || [];
+  };
 
   // Game settings based on difficulty
   const getGameSettings = (difficulty) => {
@@ -90,17 +104,13 @@ export default function App() {
   const handleClick = (index) => {
     const holeContent = holes[index];
     if (holeContent === "mole") {
-      if (volume > 0) {
-      playHit();
-    }
       setScore((prevScore) => prevScore + 1);
       setHoles((curHoles) => {
         const newHoles = [...curHoles];
         newHoles[index] = null;
         return newHoles;
       });
-    } 
-    else if (holeContent === "bomb") {
+    } else if (holeContent === "bomb") {
       if (volume > 0) {
         playExplosion();
       } else {
@@ -130,6 +140,12 @@ export default function App() {
       clearInterval(timerInterval);
     };
   }, [isGameActive, timeLeft, gameLoopInterval]);
+
+  useEffect(() => {
+    if (gameOver) {
+      saveScore(score, difficulty); // Save score with difficulty
+    }
+  }, [gameOver, score, difficulty]);
 
   return (
     <div className="game-container">
