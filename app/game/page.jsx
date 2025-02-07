@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useSound from 'use-sound';
 import "./page.css";
 
@@ -30,16 +30,16 @@ export default function App() {
     }
   }, []);
 
-  // Sound effect setup
-  const [explosion, { stop, setVolume: setExplosionVolume }] = useSound('explosion.mp3', {
+  const [play, { stop }] = useSound('explosion.mp3', {
     volume: volume / 100,
   });
 
-  useEffect(() => {
-    if (setExplosionVolume) {
-      setExplosionVolume(volume / 100);
+  const playExplosion = useCallback(() => {
+    if (volume > 0) {
+      play();  
     }
-  }, [volume, setExplosionVolume]);
+  }, [volume, play]); 
+
 
   // Game settings based on difficulty
   const getGameSettings = (difficulty) => {
@@ -94,7 +94,9 @@ export default function App() {
         return newHoles;
       });
     } else if (holeContent === "bomb") {
-      explosion();
+      if (volume > 0) {
+        playExplosion();
+      }
       setLives((prevLives) => prevLives - 1);
       if (lives - 1 <= 0) {
         setIsGameActive(false);
