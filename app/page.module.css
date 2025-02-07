@@ -113,3 +113,21 @@
 .settings-option select {
   padding: 10px;
 }
+
+.leftMole {
+  position: absolute;
+  left: 5%;
+  width: 300px;
+  height: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.rightMole {
+  position: absolute;
+  right: 5%;
+  width: 350px;
+  height: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}

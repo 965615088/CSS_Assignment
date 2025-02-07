@@ -79,8 +79,7 @@ export default function Scoreboard() {
         <div className="button-container">
           <button
             className="button back-button"
-            onClick={() => (typeof window !== "undefined" ? window.history.back() : null)}
-          >
+            onClick={() => (window.location.href = "/")}>
             ⬅️ Back to Menu
           </button>
           <button className="button clear-button" onClick={clearScores}>
