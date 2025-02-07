@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import useSound from 'use-sound';
 import "./page.css";
 
 export default function App() {
@@ -12,7 +13,13 @@ export default function App() {
 
   // Default settings
   const DEFAULT_STORAGE_KEY = "whacAMoleSettings";
-  const [difficulty, setDifficulty] = useState("medium"); // Default difficulty
+  const [difficulty, setDifficulty] = useState("medium");
+  const [moleSkin, setMoleSkin] = useState("mole.png");
+  const [volume, setVolume] = useState(50);
+  // const [explosion] = useSound('Explosion.mp3', {volume: volume / 100,});
+  const [explosion, { stop, setVolume: setExplosionVolume }] = useSound('explosion.mp3', {
+    volume: volume / 100,
+  });
 
   // Load saved settings only on the client side
   useEffect(() => {
@@ -21,10 +28,18 @@ export default function App() {
       if (savedSettings) {
         const parsedSettings = JSON.parse(savedSettings);
         setDifficulty(parsedSettings.difficulty || "medium");
+        setMoleSkin(parsedSettings.moleSkin || "mole.png");
+        setVolume(Number(parsedSettings.volume) || 50);
       }
     }
   }, []);
 
+  useEffect(() => {
+    if (setExplosionVolume) {
+      setExplosionVolume(volume / 100);
+    }
+  }, [volume, setExplosionVolume]);
+  
   //initialise default difficulty
   let bombProbability = 0.2; 
   let moleDuration = 750; 
@@ -32,19 +47,19 @@ export default function App() {
   // difficulty is swapped depending on the difficulty set in the settings page
   switch (difficulty) {
     case "easy":
-      bombProbability = 0.1;
+      bombProbability = 1;
       moleDuration = 900;
       break;
+      case "medium":
+        default:
+          bombProbability = 0.2;
+          moleDuration = 750;
+          break;
     case "hard":
       bombProbability = 0.35;
       moleDuration = 500;
       break;
-    case "medium":
-    default:
-      bombProbability = 0.2;
-      moleDuration = 750;
-      break;
-  }
+    }
 
   const startGame = () => {
     setScore(0);
@@ -82,6 +97,7 @@ export default function App() {
         return newHoles;
       });
     } else if (holeContent === "bomb") {
+      explosion();
       setLives((prevLives) => prevLives - 1);
       if (lives - 1 <= 0) {
         setIsGameActive(false);
@@ -147,7 +163,7 @@ export default function App() {
               <img
                 src={
                   content === "mole"
-                    ? "/mole.png"
+                    ? `/${moleSkin}`
                     : content === "bomb"
                     ? "/bomb.png"
                     : "/hole.png"

@@ -6,16 +6,18 @@ import "../settings/styles.css";
 export default function Settings() {
   const DEFAULT_STORAGE_KEY = "whacAMoleSettings";
   const savedSettings = localStorage.getItem(DEFAULT_STORAGE_KEY);
-  const initialSettings = savedSettings
+  const defaultSettings = savedSettings
     ? JSON.parse(savedSettings)
-    : { difficulty: "medium", volume: 50, showGrid: true };
+    : { difficulty: "medium", volume: 50, showGrid: true, moleSkin: "mole.png" };
 
-  const [difficulty, setDifficulty] = useState(initialSettings.difficulty);
-  const [volume, setVolume] = useState(initialSettings.volume);
-  const [showGrid, setShowGrid] = useState(initialSettings.showGrid);
+  const [difficulty, setDifficulty] = useState(defaultSettings.difficulty);
+  const [volume, setVolume] = useState(defaultSettings.volume);
+  const [showGrid, setShowGrid] = useState(defaultSettings.showGrid);
+  const [moleSkin, setMoleSkin] = useState(defaultSettings.moleSkin);
+
 
   const handleSave = () => {
-    const settings = { difficulty, volume, showGrid };
+    const settings = { difficulty, volume, showGrid, moleSkin };
     localStorage.setItem(DEFAULT_STORAGE_KEY, JSON.stringify(settings));
     alert("Settings saved!");
   };
@@ -38,7 +40,7 @@ export default function Settings() {
           min="0"
           max="100"
           value={volume}
-          onChange={(e) => setVolume(e.target.value)}
+          onChange={(e) => setVolume(Number(e.target.value))} 
         />
       </div>
       <div className="settings-option">
@@ -49,9 +51,17 @@ export default function Settings() {
           onChange={(e) => setShowGrid(e.target.checked)}
         />
       </div>
+      <div className="settings-option">
+        <label>Mole Skin:</label>
+        <select value={moleSkin} onChange={(e) => setMoleSkin(e.target.value)}>
+          <option value="mole.png">Mole 1</option>
+          <option value="mole2.png">Mole 2</option>
+          <option value="mole3.png">Mole 3</option>
+        </select>
+      </div>
       <button className="save-button" onClick={handleSave}>
         Save Settings
       </button>
-    </div>
+    </div>   
   );
 }
