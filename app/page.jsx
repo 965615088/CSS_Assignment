@@ -1,3 +1,11 @@
+/*
+Student Name: Wyse Lee Hong Yao
+Changes Made: Created Main Menu that links to the game, scoreboard, guide and settings page. Added sound effects for hover and click events.
+
+Student Name: Gao YuHao
+Changes Made: Designed the main menu page with the 2 mole images
+*/
+
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";

@@ -1,3 +1,8 @@
+/*
+Student Name: Wyse Lee Hong Yao
+Changes Made: Created a guide page to explain the game rules and controls to the player. Added sound effects for hover and click events.
+*/
+
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";

@@ -1,3 +1,8 @@
+/*
+Student Name: Wyse Lee Hong Yao
+Changes Made: Created a common component to handle the Escape key press event to navigate back to the main menu on all pages.
+*/
+
 "use client";
 import { useEffect, createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
