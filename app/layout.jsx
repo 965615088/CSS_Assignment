@@ -5,6 +5,7 @@ Changes Made: Added a global layout component to wrap the entire application wit
 
 "use client";
 import { Inter } from "next/font/google";
+import "./globals.css"
 import { EscapeKeyProvider } from "./components/EscapeKeyListener";
 
 const inter = Inter({ subsets: ["latin"] });
