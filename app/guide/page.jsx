@@ -25,7 +25,7 @@ const Guide = () => {
     },
     {
       title: 'Controls',
-      content: 'Left click on the mole when it appears out the hole to score a point, while clicking on a bomb loses you one life point.',
+      content: 'Left click on the mole when it appears out the hole to score a point, while clicking on a bomb loses you one life point. Press the \'Esc\' Key at any point in time to return to the Main Menu.',
     },
     {
       title: 'Tips for Success',
