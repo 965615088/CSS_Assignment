@@ -71,14 +71,6 @@ export default function Settings() {
         <span>{volume}%</span>
       </div>
       <div className="settings-option">
-        <label>Show Grid:</label>
-        <input
-          type="checkbox"
-          checked={showGrid}
-          onChange={(e) => setShowGrid(e.target.checked)}
-        />
-      </div>
-      <div className="settings-option">
         <label>Mole Skin:</label>
         <select value={moleSkin} onChange={(e) => setMoleSkin(e.target.value)}>
           <option value="mole.png">Mole 1</option>
