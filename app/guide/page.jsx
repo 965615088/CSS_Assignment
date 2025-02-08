@@ -66,6 +66,12 @@ export default function Guide() {
     }
   };
 
+  const prevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
   const [playHover] = useSound("hover.mp3", {
     volume: volumeRef.current / 100,
   });
@@ -86,28 +92,53 @@ export default function Guide() {
         <h1 className={styles.titleText}>{sections[page].title}</h1>
         <p className={styles.bodyText}>{sections[page].content}</p>
       </div>
-      {page < sections.length - 1 ? (
-        <button
-          className={styles.actionButton}
-          onClick={() => {
-            nextPage();
-            playSound(playClick); // Play sound on click
-          }}
-          onMouseEnter={() => playSound(playHover)} // Play sound on hover
-        >
-          Next Page
-        </button>
-      ) : (
-        <Link href="/" passHref>
+      <div className={styles.buttonContainer}>
+        {page > 0 ? (
           <button
             className={styles.actionButton}
-            onClick={() => playSound(playClick)} // Play sound on click
-            onMouseEnter={() => playSound(playHover)} // Play sound on hover
+            onClick={() => {
+              prevPage();
+              playSound(playClick);
+            }}
+            onMouseEnter={() => playSound(playHover)}
           >
-            Return to Main Menu
+            Previous Page
           </button>
-        </Link>
-      )}
+        ) : (
+          <Link href="/" passHref>
+            <button
+              className={styles.actionButton}
+              onClick={() => playSound(playClick)}
+              onMouseEnter={() => playSound(playHover)}
+            >
+              Return to Main Menu
+            </button>
+          </Link>
+        )}
+
+        {page < sections.length - 1 ? (
+          <button
+            className={styles.actionButton}
+            onClick={() => {
+              nextPage();
+              playSound(playClick);
+            }}
+            onMouseEnter={() => playSound(playHover)}
+          >
+            Next Page
+          </button>
+        ) : (
+          <Link href="/" passHref>
+            <button
+              className={styles.actionButton}
+              onClick={() => playSound(playClick)}
+              onMouseEnter={() => playSound(playHover)}
+            >
+              Return to Main Menu
+            </button>
+          </Link>
+        )}
+      </div>
     </div>
   );
-};
+}

@@ -1,6 +1,6 @@
 /*
 Student Name: Wyse Lee Hong Yao
-Changes Made: Added CSS for the Guide page. 
+Changes Made: Added CSS for the Guide page.
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -25,6 +25,7 @@ Changes Made: Added CSS for the Guide page.
   max-width: 600px;
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: 0px 0px 10px #00ff00;
+  margin-bottom: 20px;
 }
 
 .titleText {
@@ -40,6 +41,12 @@ Changes Made: Added CSS for the Guide page.
   text-shadow: 1px 1px 0px #008800;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
 .actionButton {
   background-color: #0000ff;
   color: white;
@@ -49,7 +56,6 @@ Changes Made: Added CSS for the Guide page.
   text-transform: uppercase;
   font-family: 'Press Start 2P', cursive;
   cursor: pointer;
-  margin-top: 20px;
   box-shadow: 3px 3px 0px white;
   transition: all 0.2s;
 }
