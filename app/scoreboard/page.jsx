@@ -1,3 +1,8 @@
+/*
+Student Name: Ian Tan Jun Yang
+Changes Made: Created a page where it shows the scores according to difficulty and allows user to clear scores.
+*/
+
 "use client";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
