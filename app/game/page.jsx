@@ -34,6 +34,10 @@ export default function App() {
     volume: volume / 100,
   });
 
+  const [playHit] = useSound('hit.mp3', {
+    volume: volume / 100,
+  });
+
   const playExplosion = useCallback(() => {
     if (volume > 0) {
       play();
@@ -64,7 +68,7 @@ export default function App() {
   const getGameSettings = (difficulty) => {
     switch (difficulty) {
       case "easy":
-        return { bombProbability: 0.1, moleDuration: 1200, gameLoopInterval: 1500 };//bomb probability 10%, mole stays visiable time, mole frequency
+        return { bombProbability: 0.1, moleDuration: 1200, gameLoopInterval: 1000 };//bomb probability 10%, mole stays visiable time, mole frequency
       case "medium":
         return { bombProbability: 0.2, moleDuration: 1000, gameLoopInterval: 1000 };
       case "hard":
@@ -108,6 +112,9 @@ export default function App() {
   const handleClick = (index) => {
     const holeContent = holes[index]; // Get the content of the hole at the given index
     if (holeContent === "mole") { // If the hole contains a mole
+      if (volume > 0) {
+        playHit();
+      }
       setScore((prevScore) => prevScore + 1);// Increment the score by 1
       setHoles((curHoles) => {
         const newHoles = [...curHoles];  // Create a shallow copy of the current holes array
