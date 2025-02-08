@@ -42,6 +42,10 @@ export default function App() {
     }
   }, [volume, play]);
 
+  const [playHit] = useSound('hit.mp3', {
+    volume: volume / 100,
+  });
+
   // Save score with difficulty
   const saveScore = (score, difficulty) => {
     const savedScores = JSON.parse(localStorage.getItem('gameScores')) || {};
@@ -62,7 +66,7 @@ export default function App() {
   const getGameSettings = (difficulty) => {
     switch (difficulty) {
       case "easy":
-        return { bombProbability: 0.1, moleDuration: 1200, gameLoopInterval: 1500 };
+        return { bombProbability: 0.1, moleDuration: 1200, gameLoopInterval: 1000 };
       case "medium":
         return { bombProbability: 0.2, moleDuration: 1000, gameLoopInterval: 1000 };
       case "hard":
@@ -104,6 +108,9 @@ export default function App() {
   const handleClick = (index) => {
     const holeContent = holes[index];
     if (holeContent === "mole") {
+      if (volume > 0) {
+        playHit();
+      }
       setScore((prevScore) => prevScore + 1);
       setHoles((curHoles) => {
         const newHoles = [...curHoles];
@@ -174,7 +181,7 @@ export default function App() {
               <h2>Game Over!</h2>
               <p>Your Score: {score}</p>
               <button className="play-again" onClick={startGame}>Play Again</button>
-              <button className="scoreboard" onClick={() => window.location.href = "/history"}>Scoreboard</button>
+              <button className="scoreboard" onClick={() => window.location.href = "/scoreboard"}>Scoreboard</button>
               <button className="home" onClick={() => window.location.href = "/"}>Home</button>
             </div>
           </div>

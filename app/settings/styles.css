@@ -1,4 +1,5 @@
 /* General Reset */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,30 +7,33 @@
 }
 
 body {
-  font-family: 'Press Start 2P', cursive, sans-serif; /* Retro font */
-  background-color: black; /* Dark background */
-  color: #00ff00; /* Neon text color */
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  background: radial-gradient(circle, #000000 60%, #001a00);
+  color: #00ffcc;
+  text-shadow: 0 0 5px #00ffcc;
   line-height: 1.6;
 }
 
 /* Settings Container */
 .settings-container {
-  max-width: 500px; /* Limit width for better readability */
-  margin: 50px auto; /* Center the container */
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 255, 0, 0.3); /* Neon green shadow for depth */
+  max-width: 550px;
+  margin: 60px auto;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+  border: 2px solid rgba(0, 255, 204, 0.6);
 }
 
 /* Heading */
 .settings-container h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #00ff00; /* Neon green heading color */
+  color: #00ffcc;
   font-size: 2rem;
   font-weight: bold;
-  text-shadow: 2px 2px 0px #008800; /* Glowing effect */
+  text-shadow: 0 0 8px #00ffcc;
 }
 
 /* Individual Setting Option */
@@ -37,71 +41,62 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-bottom: 1px solid #00ff00; /* Neon green separator */
+  margin-bottom: 20px;
+  padding: 12px;
+  border-bottom: 2px solid rgba(0, 255, 204, 0.5);
 }
 
 /* Labels */
 .settings-option label {
   font-size: 1rem;
-  font-weight: 500;
-  color: #00ff00; /* Neon label color */
-  text-shadow: 1px 1px 0px #008800; /* Glowing effect */
+  color: #00ffcc;
+  text-shadow: 0 0 5px #00ffcc;
 }
 
 /* Dropdown Select */
 .settings-option select {
-  padding: 8px;
-  border: 1px solid #00ff00; /* Neon green border */
-  border-radius: 4px;
+  padding: 10px;
+  border: 2px solid #00ffcc;
+  border-radius: 6px;
   font-size: 1rem;
-  background-color: black;
-  color: #00ff00;
+  background: black;
+  color: #00ffcc;
   cursor: pointer;
-  text-shadow: 1px 1px 0px #008800; /* Glowing effect */
+  transition: 0.3s ease;
+  text-shadow: 0 0 5px #00ffcc;
 }
 
 .settings-option select:focus {
   outline: none;
-  border-color: #ff0000; /* Red border on focus */
-  box-shadow: 0 0 4px rgba(255, 0, 0, 0.5);
+  border-color: #ff0099;
+  box-shadow: 0 0 10px rgba(255, 0, 153, 0.8);
 }
 
 /* Volume Slider */
 .settings-option input[type="range"] {
   width: 80%;
-  height: 8px;
-  background: #00ff00;
-  border-radius: 5px;
-  outline: none;
-  -webkit-appearance: none;
   appearance: none;
+  height: 10px;
+  background: linear-gradient(90deg, #00ffcc, #ff0099);
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .settings-option input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #ff0000;
+  width: 22px;
+  height: 22px;
+  background: #ff0099;
   border-radius: 50%;
   cursor: pointer;
-}
-
-.settings-option input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #ff0000;
-  border-radius: 50%;
-  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 153, 0.8);
 }
 
 /* Checkbox */
 .settings-option input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #ff0000; /* Red checkbox color */
+  width: 22px;
+  height: 22px;
+  accent-color: #ff0099;
   cursor: pointer;
 }
 
@@ -109,38 +104,39 @@ body {
 .save-button {
   display: block;
   width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #0000ff; /* Blue button */
+  padding: 12px;
+  margin-top: 25px;
+  background: linear-gradient(90deg, #00ffcc, #ff0099);
   color: white;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   border: 3px solid white;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 3px 3px 0px white; /* Glowing effect */
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px white;
+  box-shadow: 0 0 10px white;
 }
 
 .save-button:hover {
-  background-color: #ff0000; /* Red on hover */
-  box-shadow: 3px 3px 0px yellow; /* Yellow glowing effect on hover */
+  background: linear-gradient(90deg, #ff0099, #00ffcc);
+  box-shadow: 0 0 15px yellow;
 }
 
 .save-button:active {
   box-shadow: none;
-  transform: translate(3px, 3px); /* Button movement on click */
+  transform: translateY(3px);
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
   .settings-container {
-    margin: 20px;
-    padding: 15px;
+    margin: 25px;
+    padding: 18px;
   }
 
   .settings-container h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .settings-option input[type="range"] {
