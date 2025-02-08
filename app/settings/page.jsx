@@ -66,7 +66,7 @@ export default function Settings() {
           min="0"
           max="100"
           value={volume}
-          onChange={(e) => setVolume(Number(e.target.value))}
+          onChange={(e) => setVolume(e.target.value)}
         />
         <span>{volume}%</span>
       </div>

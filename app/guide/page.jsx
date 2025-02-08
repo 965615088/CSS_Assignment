@@ -1,12 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import useSound from "use-sound";
 import styles from "./Page.module.css";
 
-const Guide = () => {
+export default function Guide() {
   const [page, setPage] = useState(0);
   const [volume, setVolume] = useState(50); // Default volume to 50
+  const volumeRef = useRef(volume); // Ref to track volume value
 
   // Load volume from localStorage
   useEffect(() => {
@@ -14,7 +15,9 @@ const Guide = () => {
       const savedSettings = localStorage.getItem("whacAMoleSettings");
       if (savedSettings) {
         const parsedSettings = JSON.parse(savedSettings);
-        setVolume(parsedSettings.volume || 50); // Set volume from saved settings
+        const newVolume = parsedSettings.volume ?? 50; // Default to 50 if volume is undefined
+        setVolume(newVolume);
+        volumeRef.current = newVolume; // Ensure ref is updated
       }
     }
   }, []);
@@ -58,8 +61,19 @@ const Guide = () => {
     }
   };
 
-  const [playHover] = useSound("hover.mp3", { volume: volume / 100 });
-  const [playClick] = useSound("click.mp3", { volume: volume / 100 });
+  const [playHover] = useSound("hover.mp3", {
+    volume: volumeRef.current / 100,
+  });
+
+  const [playClick] = useSound("click.mp3", {
+    volume: volumeRef.current / 100,
+  });
+
+  const playSound = (sound) => {
+    if (volumeRef.current > 0) {
+      sound(); // Only play sound if volume is greater than 0
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -72,9 +86,9 @@ const Guide = () => {
           className={styles.actionButton}
           onClick={() => {
             nextPage();
-            playClick(); // Play sound on click
+            playSound(playClick); // Play sound on click
           }}
-          onMouseEnter={playHover} // Play sound on hover
+          onMouseEnter={() => playSound(playHover)} // Play sound on hover
         >
           Next Page
         </button>
@@ -82,8 +96,8 @@ const Guide = () => {
         <Link href="/" passHref>
           <button
             className={styles.actionButton}
-            onClick={playClick} // Play sound on click
-            onMouseEnter={playHover} // Play sound on hover
+            onClick={() => playSound(playClick)} // Play sound on click
+            onMouseEnter={() => playSound(playHover)} // Play sound on hover
           >
             Return to Main Menu
           </button>
@@ -92,5 +106,3 @@ const Guide = () => {
     </div>
   );
 };
-
-export default Guide;

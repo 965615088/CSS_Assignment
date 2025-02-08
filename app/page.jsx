@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import useSound from "use-sound";
 import styles from "./page.module.css";
@@ -7,35 +7,34 @@ import styles from "./page.module.css";
 export default function Home() {
   // State to manage the volume level
   const [volume, setVolume] = useState(50); // Default volume to 50
+  const volumeRef = useRef(volume); // Ref to track volume value
 
-  // Load volume from localStorage
+  // Load volume from localStorage (under the whacAMoleSettings key)
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedSettings = localStorage.getItem("whacAMoleSettings");
       if (savedSettings) {
-        const parsedSettings = JSON.parse(savedSettings);
-        setVolume(parsedSettings.volume || 50); // Set volume from saved settings
+        const { volume: savedVolume } = JSON.parse(savedSettings);
+        const newVolume = savedVolume || 50; // Default to 50 if volume is 0 or not set
+        setVolume(newVolume);
+        volumeRef.current = newVolume; // Update ref after loading from localStorage
       }
     }
   }, []);
 
   // Adjust the volume dynamically for hover and click sounds
   const [playHover] = useSound("hover.mp3", {
-    volume: volume / 100, // Set volume based on localStorage value
+    volume: volumeRef.current / 100, // Use volume from ref
   });
   const [playClick] = useSound("click.mp3", {
-    volume: volume / 100, // Set volume based on localStorage value
+    volume: volumeRef.current / 100, // Use volume from ref
   });
 
-  // Save volume to localStorage whenever it's updated
-  const saveVolume = (newVolume) => {
-    // Load existing settings and update volume
-    const savedSettings = JSON.parse(localStorage.getItem("whacAMoleSettings")) || {};
-    savedSettings.volume = newVolume;
-    localStorage.setItem("whacAMoleSettings", JSON.stringify(savedSettings));
-
-    // Update state with new volume
-    setVolume(newVolume);
+  // Function to play sound
+  const playSound = (sound) => {
+    if (volumeRef.current > 0) {
+      sound(); // Only play sound if volume is greater than 0
+    }
   };
 
   return (
@@ -49,32 +48,32 @@ export default function Home() {
           <Link
             href="/game"
             className={styles.button}
-            onMouseEnter={playHover} // Play sound on hover
-            onClick={playClick} // Play sound on click
+            onMouseEnter={() => playSound(playHover)} // Play sound on hover
+            onClick={() => playSound(playClick)} // Play sound on click
           >
             Play
           </Link>
           <Link
             href="/scoreboard"
             className={styles.button}
-            onMouseEnter={playHover}
-            onClick={playClick}
+            onMouseEnter={() => playSound(playHover)} // Play sound on hover
+            onClick={() => playSound(playClick)} // Play sound on click
           >
             Scoreboard
           </Link>
           <Link
             href="/guide"
             className={styles.button}
-            onMouseEnter={playHover}
-            onClick={playClick}
+            onMouseEnter={() => playSound(playHover)} // Play sound on hover
+            onClick={() => playSound(playClick)} // Play sound on click
           >
             Guide
           </Link>
           <Link
             href="/settings"
             className={styles.button}
-            onMouseEnter={playHover}
-            onClick={playClick}
+            onMouseEnter={() => playSound(playHover)} // Play sound on hover
+            onClick={() => playSound(playClick)} // Play sound on click
           >
             Settings
           </Link>
