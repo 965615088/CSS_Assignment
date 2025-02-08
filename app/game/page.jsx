@@ -185,7 +185,7 @@ export default function App() {
               <h2>Game Over!</h2>
               <p>Your Score: {score}</p>
               <button className="play-again" onClick={startGame}>Play Again</button>
-              <button className="scoreboard" onClick={() => window.location.href = "/history"}>Scoreboard</button>
+              <button className="scoreboard" onClick={() => window.location.href = "/scoreboard"}>Scoreboard</button>
               <button className="home" onClick={() => window.location.href = "/"}>Home</button>
             </div>
           </div>
