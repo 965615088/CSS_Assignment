@@ -4,6 +4,11 @@ Changes Made: Designed the overall game play
 
 Student Name: Wyse Lee Hong Yao
 Changes Made: Added hitting and explosion sound effect
+
+
+Student Name: Ian Tan Jun Yang
+Changes Made: Added functions to store scores according to difficulty in localStorage
+
 */
 
 "use client";
