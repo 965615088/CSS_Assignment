@@ -1,3 +1,11 @@
+/*
+Student Name: Gao YuHao
+Changes Made: Designed the overall game play
+
+Student Name: Wyse Lee Hong Yao
+Changes Made: Added hitting and explosion sound effect
+*/
+
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import useSound from 'use-sound';
