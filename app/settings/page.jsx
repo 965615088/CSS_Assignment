@@ -1,40 +1,47 @@
+/*
+Student Name: Eng Zhe Xuan, Gerel
+Changes Made: Created a page where users can change the difficulty, volume and mole design as well as the option to save it
+*/
+
 "use client";
 import { useState, useEffect } from "react";
 import "../settings/styles.css";
 
 export default function Settings() {
-  const DEFAULT_STORAGE_KEY = "whacAMoleSettings";
+  const DEFAULT_STORAGE_KEY = "whacAMoleSettings"; //initialises variable to use for storing and retrieving settings from localstorage
+  //initialises the default settings
   const [difficulty, setDifficulty] = useState("medium");
   const [volume, setVolume] = useState(50);
   const [showGrid, setShowGrid] = useState(true);
   const [moleSkin, setMoleSkin] = useState("mole.png");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); //checks for error
 
   useEffect(() => {
     try {
-      const savedSettings = localStorage.getItem(DEFAULT_STORAGE_KEY);
+      const savedSettings = localStorage.getItem(DEFAULT_STORAGE_KEY);//retrieves saved settings
       if (savedSettings) {
-        const parsedSettings = JSON.parse(savedSettings);
+        const parsedSettings = JSON.parse(savedSettings);//parses json texts to javascript
+        //uses the parsedsettings or if not, it uses the default settings
         setDifficulty(parsedSettings.difficulty || "medium");
         setVolume(parsedSettings.volume || 50);
         setShowGrid(parsedSettings.showGrid || true);
         setMoleSkin(parsedSettings.moleSkin || "mole.png");
       }
-      setLoading(false);
+      setLoading(false);//indicates loading is completed
+      //error catching
     } catch (err) {
       setError("Error loading settings.");
       setLoading(false);
     }
   }, []);
 
-  const handleSave = () => {
+  const handleSave = () => { //when user clicks save settings
     try {
       const settings = { difficulty, volume, showGrid, moleSkin };
-      localStorage.setItem(DEFAULT_STORAGE_KEY, JSON.stringify(settings));
+      localStorage.setItem(DEFAULT_STORAGE_KEY, JSON.stringify(settings));//converts settings to json
       alert("Settings saved successfully!");
-      // Redirect back to the game page to reload settings
-      window.location.href = "/";
+      window.location.href = "/";// Redirect back to the game page to reload settings
     } catch (err) {
       setError("Error saving settings.");
     }
